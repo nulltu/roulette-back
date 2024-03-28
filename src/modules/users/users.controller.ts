@@ -1,8 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserResponseDto } from './dto/user-response.dto';
-import { ApiResponse } from '@nestjs/swagger';
-
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -26,5 +26,15 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'User not found' })
   findById(@Param('id') id: number): Promise<UserResponseDto> {
     return this.usersService.findOneById(id);
+  }
+
+  @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'User deleted successfully',
+  })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  deleteById(@Param('id') id: number) {
+    return this.usersService.deleteById(id);
   }
 }
