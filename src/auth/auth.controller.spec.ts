@@ -51,8 +51,6 @@ describe('AuthController', () => {
         password: 'rusbent',
       };
 
-      await controller.login(loginDto);
-
       expect(authService.login).toHaveBeenCalledWith(loginDto);
     });
   });
