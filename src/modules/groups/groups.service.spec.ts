@@ -104,7 +104,7 @@ describe('GroupsService', () => {
 
     it('should throw NotFoundException if group not found', async () => {
       jest
-        .spyOn(mockRepository, 'findOneBy22')
+        .spyOn(mockRepository, 'findOneBy')
         .mockResolvedValue(undefined as any);
 
       await expect(groupsService.findGroupById(1)).rejects.toThrow(
