@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   HttpException,
   Injectable,
   InternalServerErrorException,
@@ -12,6 +13,7 @@ import { ResponseCreateGroupDto } from './dto/response-create-group.dto';
 import { mapGroupToDto } from '../../shared/utils/transform-dtos';
 import { HTTP_STATUS_MESSAGES } from '../../shared/utils/constants';
 import LOGGER from '../../config/logger';
+import { ResponseGroupDto } from './dto/response-group.dto';
 
 @Injectable()
 export class GroupsService {
@@ -22,18 +24,31 @@ export class GroupsService {
   async create(
     createGroupDto: CreateGroupDto,
   ): Promise<ResponseCreateGroupDto> {
+    const { groupName } = createGroupDto;
+
+    const groupNameExists = await this.groupsRepository.findOne({
+      where: { groupName },
+    });
+
+    if (groupNameExists) {
+      throw new ConflictException('groupName already exists');
+    }
+
     const group = this.groupsRepository.create(createGroupDto);
     const savedGroup = await this.groupsRepository.save(group);
     return {
       id: savedGroup.id,
       groupName: savedGroup.groupName,
       userId: savedGroup.userId,
+      players: savedGroup.players,
     };
   }
 
   async findAll(): Promise<ResponseCreateGroupDto[]> {
     try {
-      const group = await this.groupsRepository.find();
+      const group = await this.groupsRepository.find({
+        relations: ['players'],
+      });
       if (!group || group.length === 0) {
         throw new NotFoundException('No groups found');
       }
@@ -44,16 +59,21 @@ export class GroupsService {
     }
   }
 
-  async findGroupById(id: number) {
-    const group = await this.groupsRepository.findOneBy({ id });
+  async findGroupById(id: number): Promise<ResponseGroupDto> {
+    const group = await this.groupsRepository.findOne({
+      where: { id },
+      relations: ['players'],
+    });
+
     if (!group) {
       throw new NotFoundException('Group not found');
     }
 
-    const responseCreateGroupDto: ResponseCreateGroupDto = {
+    const responseCreateGroupDto: ResponseGroupDto = {
       id: group.id,
       groupName: group.groupName,
       userId: group.userId,
+      players: group.players,
     };
 
     return responseCreateGroupDto;

@@ -43,7 +43,6 @@ describe('UsersController', () => {
         },
       ];
 
-      // Mocking the implementation of the userService.findAll method
       jest.spyOn(userService, 'findAll').mockResolvedValue(users);
       expect(await controller.findAll()).toEqual(users);
     });

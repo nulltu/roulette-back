@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Group } from '../entities/group.entity';
 import { Player } from '../../../modules/players/entities/player.entity';
 
-export class ResponseCreateGroupDto extends OmitType(Group, [
+export class ResponseGroupDto extends OmitType(Group, [
   'createdAt',
   'updatedAt',
   'user',
@@ -30,7 +30,6 @@ export class ResponseCreateGroupDto extends OmitType(Group, [
   userId: number;
 
   @ApiProperty({
-    type: [Player],
     example: [],
     description: 'The players of the group',
   })

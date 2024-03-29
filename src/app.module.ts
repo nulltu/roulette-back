@@ -5,6 +5,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { GroupsModule } from './modules/groups/groups.module';
+import { PlayersModule } from './modules/players/players.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { GroupsModule } from './modules/groups/groups.module';
     UsersModule,
     AuthModule,
     GroupsModule,
+    PlayersModule,
   ],
   controllers: [],
   providers: [],

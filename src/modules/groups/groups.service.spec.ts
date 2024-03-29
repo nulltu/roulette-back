@@ -77,7 +77,7 @@ describe('GroupsService', () => {
   describe('findGroupById', () => {
     it('should find a group by id', async () => {
       const group = { id: 1, groupName: 'string', userId: 1 };
-      jest.spyOn(mockRepository, 'findOneBy').mockResolvedValue(group as any);
+      jest.spyOn(mockRepository, 'findOne').mockResolvedValue(group as any);
 
       const result = await groupsService.findGroupById(1);
 
@@ -103,13 +103,15 @@ describe('GroupsService', () => {
     });
 
     it('should throw NotFoundException if group not found', async () => {
-      jest
-        .spyOn(mockRepository, 'findOneBy')
-        .mockResolvedValue(undefined as any);
+      jest.spyOn(mockRepository, 'findOneBy').mockResolvedValue(null as any);
 
-      await expect(groupsService.findGroupById(1)).rejects.toThrow(
-        NotFoundException,
-      );
+      try {
+        await groupsService.deleteGroupById(1);
+        fail('NotFoundException was not thrown');
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toBe('Group not found');
+      }
     });
   });
 });

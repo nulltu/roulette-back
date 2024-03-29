@@ -51,6 +51,7 @@ describe('GroupsController', () => {
         id: 1,
         groupName: 'Test Group',
         userId: 1,
+        players: null,
       };
       jest.spyOn(groupsService, 'create').mockResolvedValue(response);
 
@@ -61,7 +62,12 @@ describe('GroupsController', () => {
   describe('findAll', () => {
     it('should return an array of groups', async () => {
       const response: ResponseCreateGroupDto[] = [
-        { id: 1, groupName: 'Test Group', userId: 1 },
+        {
+          id: 1,
+          groupName: 'Test Group',
+          userId: 1,
+          players: null,
+        },
       ];
       jest.spyOn(groupsService, 'findAll').mockResolvedValue(response);
 
@@ -76,6 +82,7 @@ describe('GroupsController', () => {
         id: 1,
         groupName: 'Test Group',
         userId: 1,
+        players: null,
       };
       jest.spyOn(groupsService, 'findGroupById').mockResolvedValue(response);
 

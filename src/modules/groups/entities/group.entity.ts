@@ -1,5 +1,12 @@
+import { Player } from '../../../modules/players/entities/player.entity';
 import { User } from '../../users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity({ name: 'groups' })
 export class Group {
@@ -11,6 +18,9 @@ export class Group {
 
   @ManyToOne(() => User, (user) => user.groups, { nullable: true })
   user: User;
+
+  @OneToMany(() => Player, (player) => player.group)
+  players: Player[];
 
   @Column()
   userId: number;

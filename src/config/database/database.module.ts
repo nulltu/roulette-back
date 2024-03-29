@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from '../../modules/users/entities/user.entity';
 import { Group } from '../../modules/groups/entities/group.entity';
+import { Player } from '../../modules/players/entities/player.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { Group } from '../../modules/groups/entities/group.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Group],
+        entities: [User, Group, Player],
         synchronize: true,
         ssl: true,
         uuidExtension: 'pgcrypto',

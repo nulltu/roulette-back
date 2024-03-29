@@ -3,6 +3,7 @@ import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseCreateGroupDto } from './dto/response-create-group.dto';
+import { ResponseGroupDto } from './dto/response-group.dto';
 
 @ApiTags('Groups')
 @Controller('groups')
@@ -32,6 +33,11 @@ export class GroupsController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Group retrieved successfully',
+    type: [ResponseGroupDto],
+  })
   findGroupById(@Param('id') id: number) {
     return this.groupsService.findGroupById(+id);
   }

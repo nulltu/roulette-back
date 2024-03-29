@@ -8,4 +8,7 @@ export const HTTP_STATUS_MESSAGES = {
   FAILED_DELETED_GROUP: 'Failed to delete group',
   GROUP_DELETED_SUCCESS: 'Group deleted successfully',
   ERROR_WHILE_CREATING_USER: 'Error occurred while creating user:',
+  FAILED_DELETED_PLAYER: 'Failed to delete player',
+  PLAYER_DELETED_SUCCESS: 'Player deleted successfully',
+  PLAYER_NOT_FOUND: 'Player not found',
 };
