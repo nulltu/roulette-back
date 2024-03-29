@@ -1,6 +1,8 @@
 import { OmitType } from '@nestjs/mapped-types';
 import { User } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Group } from '../../../modules/groups/entities/group.entity';
+import { ResponseCreateGroupDto } from '../../../modules/groups/dto/response-create-group.dto';
 
 export class UserResponseDto extends OmitType(User, [
   'password',
@@ -28,4 +30,11 @@ export class UserResponseDto extends OmitType(User, [
     description: 'The email of the user',
   })
   email: string;
+
+  @ApiProperty({
+    type: ResponseCreateGroupDto,
+    isArray: true,
+    description: 'List of groups',
+  })
+  groups: Group[];
 }

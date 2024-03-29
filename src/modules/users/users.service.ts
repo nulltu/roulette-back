@@ -31,7 +31,9 @@ export class UsersService {
 
   async findAll(): Promise<UserResponseDto[]> {
     try {
-      const users = await this.userRepository.find();
+      const users = await this.userRepository.find({ relations: ['groups'] });
+      console.log(users);
+
       if (!users) {
         throw new NotFoundException('No users found');
       }
@@ -56,6 +58,7 @@ export class UsersService {
       id: user.id,
       username: user.username,
       email: user.email,
+      groups: user.groups,
     };
 
     return userResponseDto;

@@ -39,6 +39,7 @@ describe('UsersController', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           lastLogin: new Date(),
+          groups: null,
         },
       ];
 

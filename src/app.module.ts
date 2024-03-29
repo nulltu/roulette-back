@@ -4,6 +4,7 @@ import { DatabaseModule } from './config/database/database.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { GroupsModule } from './modules/groups/groups.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
     DatabaseModule,
     UsersModule,
     AuthModule,
+    GroupsModule,
   ],
   controllers: [],
   providers: [],

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Group } from '../../../modules/groups/entities/group.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -26,4 +27,7 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true, name: 'last_login' })
   lastLogin: Date;
+
+  @OneToMany(() => Group, (group) => group.user)
+  groups: Group[];
 }
