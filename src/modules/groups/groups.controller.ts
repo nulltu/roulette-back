@@ -1,10 +1,20 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseCreateGroupDto } from './dto/response-create-group.dto';
 import { ResponseGroupDto } from './dto/response-group.dto';
+import { JwtAuthGuard } from '../../guards/auth/auth.guard';
 
+@ApiBearerAuth('JWT')
 @ApiTags('Groups')
 @Controller('groups')
 export class GroupsController {
@@ -22,6 +32,7 @@ export class GroupsController {
     return this.groupsService.create(createGroupDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiResponse({
     status: 200,

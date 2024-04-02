@@ -12,3 +12,8 @@ export const HTTP_STATUS_MESSAGES = {
   PLAYER_DELETED_SUCCESS: 'Player deleted successfully',
   PLAYER_NOT_FOUND: 'Player not found',
 };
+
+export interface IValidateJWT {
+  id: number;
+  email: string;
+}

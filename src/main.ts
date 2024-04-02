@@ -7,12 +7,19 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Roulette Backend Documentation')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'JWT',
+    )
+    .setTitle('Roulette Backend Docs')
     .setDescription('The roulette API description')
     .setVersion('1.0')
-    .addTag('roulette')
+    .addServer('http://localhost:3000')
+    .addTag('roulette', 'groups')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());

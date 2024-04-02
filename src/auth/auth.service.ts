@@ -36,7 +36,8 @@ export class AuthService {
     };
   }
 
-  async login({ email, password }: LoginDto) {
+  async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
     const user = await this.usersService.findOneByEmail(email);
 
     if (!user) {
@@ -51,12 +52,18 @@ export class AuthService {
 
     user.lastLogin = new Date();
     await this.usersService.update(user.id, { lastLogin: user.lastLogin });
-    const payload = { email: user.email };
+    const payload = { id: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
     return {
-      token: token,
       email: user.email,
+      token,
     };
+  }
+
+  validateToken(token: string) {
+    return this.jwtService.verify(token, {
+      secret: process.env.JWT_SECRET_KEY,
+    });
   }
 }
