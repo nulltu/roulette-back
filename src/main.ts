@@ -8,7 +8,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      { type: 'https', scheme: 'bearer', bearerFormat: 'JWT' },
       'JWT',
     )
     .setTitle('Roulette Backend Docs')
