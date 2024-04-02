@@ -8,14 +8,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .addBearerAuth(
-      { type: 'https', scheme: 'bearer', bearerFormat: 'JWT' },
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
       'JWT',
     )
     .setTitle('Roulette Backend Docs')
     .setDescription('The roulette API description')
     .setVersion('1.0')
     .addServer('http://localhost:3000')
-    .addTag('roulette', 'groups')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
