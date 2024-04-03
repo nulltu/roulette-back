@@ -13,6 +13,7 @@ const mockRepository = {
   create: jest.fn(),
   save: jest.fn(),
   find: jest.fn(),
+  existsBy: jest.fn(),
 };
 
 describe('GroupsService', () => {
@@ -46,6 +47,9 @@ describe('GroupsService', () => {
       const savedGroup = { id: 1, ...createGroupDto };
       jest.spyOn(mockRepository, 'create').mockReturnValue(savedGroup as any);
       jest.spyOn(mockRepository, 'save').mockResolvedValue(savedGroup as any);
+      jest
+        .spyOn(mockRepository, 'existsBy')
+        .mockResolvedValue(savedGroup as any);
 
       const result = await groupsService.create(createGroupDto);
 

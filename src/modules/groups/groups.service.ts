@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   Injectable,
@@ -24,10 +25,15 @@ export class GroupsService {
   async create(
     createGroupDto: CreateGroupDto,
   ): Promise<ResponseCreateGroupDto> {
-    const { groupName } = createGroupDto;
+    const { groupName, userId } = createGroupDto;
+
+    const userIdExists = await this.groupsRepository.existsBy({ userId });
+    if (!userIdExists) {
+      throw new BadRequestException('userId does not exist');
+    }
 
     const groupNameExists = await this.groupsRepository.findOne({
-      where: { groupName },
+      where: { groupName, userId },
     });
 
     if (groupNameExists) {

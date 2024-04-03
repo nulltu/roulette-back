@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   Injectable,
@@ -21,10 +22,15 @@ export class PlayersService {
   ) {}
 
   async create(createPlayerDto: CreatePlayerDto) {
-    const { name } = createPlayerDto;
+    const { name, groupId } = createPlayerDto;
+
+    const groupIdExists = await this.playersRepository.existsBy({ groupId });
+    if (!groupIdExists) {
+      throw new BadRequestException('groupId does not exist');
+    }
 
     const existingPlayer = await this.playersRepository.findOne({
-      where: { name },
+      where: { name, groupId },
     });
     if (existingPlayer) {
       throw new ConflictException('name already exists');

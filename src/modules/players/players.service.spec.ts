@@ -13,6 +13,7 @@ const mockPlayerRepository = {
   create: jest.fn(),
   save: jest.fn(),
   find: jest.fn(),
+  existsBy: jest.fn(),
 };
 
 describe('PlayersService', () => {
@@ -50,6 +51,7 @@ describe('PlayersService', () => {
       jest.spyOn(mockPlayerRepository, 'findOne').mockResolvedValue(null);
       jest.spyOn(mockPlayerRepository, 'create').mockReturnValue(player);
       jest.spyOn(mockPlayerRepository, 'save').mockResolvedValue(player);
+      jest.spyOn(mockPlayerRepository, 'existsBy').mockResolvedValue(true);
 
       const result = await playerService.create(createPlayerDto);
 
@@ -58,6 +60,10 @@ describe('PlayersService', () => {
       });
       expect(mockPlayerRepository.create).toHaveBeenCalledWith(createPlayerDto);
       expect(mockPlayerRepository.save).toHaveBeenCalledWith(player);
+      expect(mockPlayerRepository.existsBy).toHaveBeenCalledWith({
+        userId: createPlayerDto.groupId,
+      });
+
       expect(result).toEqual(player);
     });
 
