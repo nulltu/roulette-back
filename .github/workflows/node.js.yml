@@ -33,6 +33,7 @@ jobs:
           echo JWT_EXPIRE=${{ secrets.JWT_EXPIRE}} >> .env
           echo DB_HOST=${{ secrets.DB_HOST }} >> .env
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo DB_DATABASE=${{ secrets.DB_DATABASE }} >> .env
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
       - run: npm run build --if-present
