@@ -61,7 +61,7 @@ describe('AuthService', () => {
 
       const result = await authService.register(registerDto);
 
-      expect(result).toEqual({ message: 'Successfully registered' });
+      expect(result).toEqual({ message: 'User created successfully' });
     });
 
     it('should throw BadRequestException if email already exists', async () => {

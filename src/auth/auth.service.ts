@@ -16,10 +16,11 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register({ username, email, password }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email);
+  async register(registerDto: RegisterDto) {
+    const { username, email, password } = registerDto;
+    const isEmailExists = await this.usersService.findOneByEmail(email);
 
-    if (user) {
+    if (isEmailExists) {
       throw new BadRequestException('Email already exists');
     }
 
@@ -32,7 +33,7 @@ export class AuthService {
     });
 
     return {
-      message: 'Successfully registered',
+      message: 'User created successfully',
     };
   }
 
