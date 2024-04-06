@@ -12,6 +12,7 @@ import { RegisterDto } from '../../auth/dto/register.dto';
 import { LoginDto } from '../../auth/dto/login.dto';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { EmailService } from '../email-server/email-server.service';
 
 jest.mock('bcrypt', () => ({
   hash: jest.fn().mockResolvedValue('hashedPassword'),
@@ -28,6 +29,7 @@ const mockRepository = {
 describe('AuthService', () => {
   let authService: AuthService;
   let userService: jest.Mocked<UsersService>;
+  let emailService: jest.Mocked<EmailService>;
   let jwtService: JwtService;
 
   beforeEach(async () => {
@@ -144,7 +146,7 @@ describe('AuthService', () => {
         remove: jest.fn(),
       };
 
-      usersService = new UsersService(mockUserRepository);
+      usersService = new UsersService(mockUserRepository, emailService);
     });
 
     describe('deleteById', () => {

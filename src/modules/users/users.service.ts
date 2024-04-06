@@ -9,18 +9,32 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserResponseDto } from './dto/user-response.dto';
 import LOGGER from '../../config/logger';
-import { HTTP_STATUS_MESSAGES } from '../../shared/utils/constants';
+import {
+  EMAIL_MESSAGES,
+  HTTP_STATUS_MESSAGES,
+} from '../../shared/utils/constants';
 import { mapUserToDto } from '../../shared/utils/transform-dtos';
+import { EmailService } from '../email-server/email-server.service';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private readonly emailService: EmailService,
   ) {}
 
   async createUser(user: Partial<User>): Promise<User> {
     try {
       const newUser = this.userRepository.create(user);
-      return await this.userRepository.save(newUser);
+      const savedUser = await this.userRepository.save(newUser);
+
+      const subject = EMAIL_MESSAGES.SUBJECT_WELLCOMED;
+      await this.emailService.sendMailWellcome(
+        savedUser.email,
+        subject,
+        user.username,
+      );
+
+      return savedUser;
     } catch (error) {
       LOGGER.error(
         `${HTTP_STATUS_MESSAGES.ERROR_WHILE_CREATING_USER} ${error.message}`,
