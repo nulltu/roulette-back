@@ -13,6 +13,18 @@ export const HTTP_STATUS_MESSAGES = {
   PLAYER_NOT_FOUND: 'Player not found',
 };
 
+export const ERROR_MESSAGES = {
+  SENT_EMAIL_ERROR: 'Sending email error',
+};
+
+export const SUCCES_MESSAGES = {
+  SENT_EMAIL_SUCCESS: 'Sending email success',
+};
+
+export const EMAIL_MESSAGES = {
+  SUBJECT_WELLCOMED: 'Welcome to the roulette, please validate your email',
+};
+
 export interface IValidateJWT {
   id: number;
   email: string;

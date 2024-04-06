@@ -48,7 +48,6 @@ describe('AuthController (e2e)', () => {
       .send(loginDto)
       .expect(HttpStatus.OK);
 
-    // Aquí puedes agregar expectativas sobre la respuesta si es necesario
     expect(response.body).toHaveProperty('token');
   });
 });

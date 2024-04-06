@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { GroupsModule } from './modules/groups/groups.module';
 import { PlayersModule } from './modules/players/players.module';
+import { EmailServerModule } from './modules/email-server/email-server.module';
+import { CustomLoggerModule } from './config/custom-logger/custom-logger.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { PlayersModule } from './modules/players/players.module';
     AuthModule,
     GroupsModule,
     PlayersModule,
+    EmailServerModule,
+    CustomLoggerModule,
   ],
   controllers: [],
   providers: [],
